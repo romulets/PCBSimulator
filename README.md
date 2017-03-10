@@ -1,2 +1,2 @@
 # CPUSimulator
-CPU Simulator
+It simulates how a CPU pay attention to proccesses
