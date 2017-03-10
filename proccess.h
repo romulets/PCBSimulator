@@ -9,10 +9,16 @@
 #define SPACE_CHAR_CODE 32
 #define BREAK_LINE_CHAR_CODE 10
 
-int count_lines (FILE *file);
-void read_file (const char *path);
+typedef struct {
+	int start_time;
+	int duration;
+	int priority;
+} Proccess;
 
-void read_file (const char *path)
+int count_lines (FILE *file);
+Proccess** read_proccesses_from_file (const char *path);
+
+Proccess** read_proccesses_from_file (const char *path)
 {
 	int count;
     int character;
@@ -20,22 +26,20 @@ void read_file (const char *path)
     int lines;
     FILE *file;
     file = fopen(path, "r");
-    Proccess proccesses[] = NULL;
-    Proccess proccess;
+    Proccess **proccesses;
 
     if (file)
     {
     	proccesses = malloc(count_lines(file) * sizeof(Proccess));
-    	proccess = malloc(sizeof(Proccess));
+    	proccesses[0] = malloc(sizeof(Proccess));
     	count = 0;
     	number = 0;
     	lines = 0;
 
-        while (!feof(file))
+    	character = getc(file);
+        while ((character = getc(file)) != EOF)
         {
-        	character = fegetc(file);
-
-        	if (character != SPACE_CHAR_CODE || character != BREAK_LINE_CHAR_CODE)
+        	if (character != SPACE_CHAR_CODE && character != BREAK_LINE_CHAR_CODE)
         	{
         		number = number + (character - BASE_CHAR_NUMBER);
         		continue;
@@ -44,23 +48,22 @@ void read_file (const char *path)
         	switch (count)
         	{
         		case 0:
-        			proccess.start_time = number;
+        			proccesses[lines]->start_time = number;
         			break;
-        		case 0:
-					proccess.duration = number;
+        		case 1:
+        			proccesses[lines]->duration = number;
 					break;
-        		case 0:
-					proccess.priority = number;
+        		case 2:
+        			proccesses[lines]->priority = number;
 					break;
         	}
 
         	if (character == BREAK_LINE_CHAR_CODE)
             {
-        		proccesses[lines] = proccess;
-            	proccess = malloc(sizeof(Proccess));
+        		lines++;
             	count = 0;
             	number = 0;
-            	lines++;
+            	proccesses[lines] = malloc(sizeof(Proccess));
             	continue;
 			}
 
@@ -70,6 +73,8 @@ void read_file (const char *path)
 
         fclose(file);
     }
+
+    return proccesses;
 }
 
 int count_lines (FILE *file)
@@ -79,8 +84,9 @@ int count_lines (FILE *file)
 	while(!feof(file))
 	{
 	  character = fgetc(file);
-	  if(character == SPACE_CHAR_CODE) lines++;
+	  if(character == BREAK_LINE_CHAR_CODE) lines++;
 	}
 
+	rewind(file);
 	return lines;
 }
