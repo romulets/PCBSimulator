@@ -8,15 +8,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "proccess.h"
+#include "process.h"
 
 int main ()
 {
-	Proccess *proccess;
+	Process *proccess;
     char *file_to_read = "/home/romulo-farias/Documents/development/c/20170308_so_alghorithms/data.txt";
-    Proccess **proccesses = read_proccesses_from_file(file_to_read);
+    Process **proccesses = read_processes_from_file(file_to_read);
 
-    int items_count = 4; //sizeof(proccesses) / sizeof(proccesses[0]);
+    int items_count = 4; //sizeof(Processes) / sizeof(Processes[0]);
 
     for (int i = 0; i < items_count; i++)
 	{

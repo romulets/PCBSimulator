@@ -1,5 +1,5 @@
 /*
- * proccess.h
+ * process.h
  *
  *  Created on: 2017-03-08
  *      Author: romulo-farias
@@ -13,12 +13,12 @@ typedef struct {
 	int start_time;
 	int duration;
 	int priority;
-} Proccess;
+} Process;
 
 int count_lines (FILE *file);
-Proccess** read_proccesses_from_file (const char *path);
+Process** read_processes_from_file (const char *path);
 
-Proccess** read_proccesses_from_file (const char *path)
+Process** read_processes_from_file (const char *path)
 {
 	int count;
     int character;
@@ -26,12 +26,12 @@ Proccess** read_proccesses_from_file (const char *path)
     int lines;
     FILE *file;
     file = fopen(path, "r");
-    Proccess **proccesses;
+    Process **processes;
 
     if (file)
     {
-    	proccesses = malloc(count_lines(file) * sizeof(Proccess));
-    	proccesses[0] = malloc(sizeof(Proccess));
+    	processes = malloc(count_lines(file) * sizeof(Process));
+    	processes[0] = malloc(sizeof(Process));
     	count = 0;
     	number = 0;
     	lines = 0;
@@ -48,13 +48,13 @@ Proccess** read_proccesses_from_file (const char *path)
         	switch (count)
         	{
         		case 0:
-        			proccesses[lines]->start_time = number;
+        			processes[lines]->start_time = number;
         			break;
         		case 1:
-        			proccesses[lines]->duration = number;
+        			processes[lines]->duration = number;
 					break;
         		case 2:
-        			proccesses[lines]->priority = number;
+        			processes[lines]->priority = number;
 					break;
         	}
 
@@ -63,7 +63,7 @@ Proccess** read_proccesses_from_file (const char *path)
         		lines++;
             	count = 0;
             	number = 0;
-            	proccesses[lines] = malloc(sizeof(Proccess));
+            	processes[lines] = malloc(sizeof(Process));
             	continue;
 			}
 
@@ -74,7 +74,7 @@ Proccess** read_proccesses_from_file (const char *path)
         fclose(file);
     }
 
-    return proccesses;
+    return processes;
 }
 
 int count_lines (FILE *file)
