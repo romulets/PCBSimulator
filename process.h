@@ -18,6 +18,7 @@ typedef struct
 	int life_time;
 	int total_time;
 	int alternations;
+	int used_time;
 	int finished;
 } Process;
 
@@ -35,6 +36,7 @@ Process create_process()
 	process.life_time = 0;
 	process.total_time = 0;
 	process.alternations = 0;
+	process.used_time = 0;
 	process.finished = 0;
 	return process;
 }
@@ -90,6 +92,7 @@ Process * read_processes_from_file(FILE *file)
 		count++;
 	}
 
+	processes[lines].priority = number;
 	rewind(file);
 
 	return processes;
