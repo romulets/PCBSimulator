@@ -22,34 +22,34 @@ typedef struct
 } Process;
 
 int count_lines(FILE *file);
-Process * create_process();
-Process** read_processes_from_file(FILE *file);
+Process create_process();
+Process * read_processes_from_file(FILE *file);
 
-Process* create_process()
+Process create_process()
 {
-	Process *process = malloc(sizeof(Process));
-	process->id = 0;
-	process->start_time = 0;
-	process->duration = 0;
-	process->priority = 0;
-	process->life_time = 0;
-	process->total_time = 0;
-	process->alternations = 0;
-	process->finished = 0;
+	Process process;
+	process.id = -1;
+	process.start_time = 0;
+	process.duration = 0;
+	process.priority = 0;
+	process.life_time = 0;
+	process.total_time = 0;
+	process.alternations = 0;
+	process.finished = 0;
 	return process;
 }
 
-Process** read_processes_from_file(FILE *file)
+Process * read_processes_from_file(FILE *file)
 {
 	int count;
 	int character;
 	int number;
 	int lines;
-	Process **processes;
+	Process *processes;
 
 	processes = malloc(count_lines(file) * sizeof(Process));
 	processes[0] = create_process();
-	processes[0]->id = 1;
+	processes[0].id = 1;
 	count = 0;
 	number = 0;
 	lines = 0;
@@ -66,13 +66,13 @@ Process** read_processes_from_file(FILE *file)
 		switch (count)
 		{
 		case 0:
-			processes[lines]->start_time = number;
+			processes[lines].start_time = number;
 			break;
 		case 1:
-			processes[lines]->duration = number;
+			processes[lines].duration = number;
 			break;
 		case 2:
-			processes[lines]->priority = number;
+			processes[lines].priority = number;
 			break;
 		}
 
@@ -82,7 +82,7 @@ Process** read_processes_from_file(FILE *file)
 			count = 0;
 			number = 0;
 			processes[lines] = create_process();
-			processes[lines]->id = lines + 1;
+			processes[lines].id = lines + 1;
 			continue;
 		}
 

@@ -4,7 +4,6 @@
  *  Created on: 2017-03-08
  *      Author: romulo-farias
  *
- *  @TODO [Bug fix] it isn't modifying the memory address in the elegible_processes array;
  */
 
 #include <stdio.h>
@@ -15,7 +14,7 @@
 #define MAXIMUM_TIME_IN_SAME_PROCESS 2
 #define FILE_PATH "/home/romulo-farias/Documents/development/c/20170308_so_alghorithms/data.txt"
 
-Process* get_highest_priority(Process **processes, int items_count);
+Process * get_highest_priority(Process *processes, int items_count);
 
 int main()
 {
@@ -27,8 +26,8 @@ int main()
 	Process *process;
 	Process *last_executed;
 	Process *executing;
-	Process **processes;
-	Process **elegible_processes;
+	Process *processes;
+	Process *elegible_processes;
 	file = fopen(FILE_PATH, "r");
 
 	if (!file)
@@ -42,11 +41,12 @@ int main()
 	printf("time");
 	for (i = 0; i < items_count; i++)
 	{
-		printf("\tP%d", processes[i]->id);
+		printf("\tP%d", processes[i].id);
 	}
 
 	times = 0;
 	elegible_processes = malloc(items_count * sizeof(Process));
+	executing = malloc(sizeof(Process));
 	times_in_same_process = MAXIMUM_TIME_IN_SAME_PROCESS;
 	while (1 == 1)
 	{
@@ -56,13 +56,15 @@ int main()
 		{
 
 			elegible_processes_count = 0;
+			free(elegible_processes);
+			elegible_processes = malloc(items_count * sizeof(Process));
 			for (i = 0; i < items_count; i++)
 			{
-				process = processes[i];
+				process = &processes[i];
 				if (process->start_time <= times && process->finished == 0
-						&& process != executing)
+						&& process->id != executing->id)
 				{
-					elegible_processes[i] = process;
+					elegible_processes[i] = *process;
 					elegible_processes_count++;
 				}
 			}
@@ -78,11 +80,11 @@ int main()
 
 		for (i = 0; i < items_count; i++)
 		{
-			process = processes[i];
+			process = &processes[i];
 
 			if (process->start_time <= times)
 			{
-				if (process == executing)
+				if (process->id == executing->id)
 				{
 					printf("\t##");
 				}
@@ -108,15 +110,15 @@ int main()
 	return 0;
 }
 
-Process* get_highest_priority(Process **processes, int items_count)
+Process * get_highest_priority(Process *processes, int items_count)
 {
 	Process *highest_priority, *process;
 
-	highest_priority = processes[0];
+	highest_priority = &processes[0];
 
 	for (int i = 1; i < items_count; i++)
 	{
-		process = processes[i];
+		process = &processes[i];
 		if (process->priority < highest_priority->priority)
 		{
 			highest_priority = process;
