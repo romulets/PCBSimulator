@@ -77,7 +77,7 @@ void perform_processes_simulation(Process * processes, int items_count)
   times_in_same_process = MAXIMUM_TIME_IN_SAME_PROCESS;
   while (1)
   {
-    if (should_finish_simulation(processes, items_count) == 1)
+    if (should_finish_simulation(processes, items_count))
       break;
 
     if (times_in_same_process >= MAXIMUM_TIME_IN_SAME_PROCESS || executing->finished == 1)
