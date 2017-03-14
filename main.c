@@ -14,7 +14,7 @@
 #define SPACE_CHAR_CODE 32
 #define BREAK_LINE_CHAR_CODE 10
 #define MAXIMUM_TIME_IN_SAME_PROCESS 2
-#define FILE_PATH "/home/romulo-farias/Documents/development/c/20170308_so_alghorithms/data.txt"
+#define FILE_PATH "./data.txt"
 
 typedef struct
 {
