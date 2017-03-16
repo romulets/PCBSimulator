@@ -10,11 +10,11 @@
 #include <stdlib.h>
 #include <malloc.h>
 
+#define FILE_PATH "./data2.txt"
 #define BASE_CHAR_NUMBER 48
 #define SPACE_CHAR_CODE 32
 #define BREAK_LINE_CHAR_CODE 10
 #define MAXIMUM_TIME_IN_SAME_PROCESS 2
-#define FILE_PATH "./data2.txt"
 
 typedef struct
 {
@@ -246,7 +246,7 @@ Process *read_processes_from_file(FILE *file)
   {
     if (character != SPACE_CHAR_CODE && character != BREAK_LINE_CHAR_CODE)
     {
-      number = number + (character - BASE_CHAR_NUMBER);
+      number = (number * 10) + (character - BASE_CHAR_NUMBER);
       continue;
     }
 
