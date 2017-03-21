@@ -1,5 +1,5 @@
-# CPUSimulator
-It simulates how a CPU pay attention to processes
+# PCBSimulator
+It simulates how a Process Control Block (PCB) works
 
 ## How it works?
 Just set up the process that you want in the file [data.txt](data.txt)
